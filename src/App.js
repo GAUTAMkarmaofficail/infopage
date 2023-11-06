@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { Suspense } from "react";
+import { HelmetProvider } from "react-helmet-async";
+import { useRoutes } from "react-router-dom";
+import "./App.css";
+import { routes } from "./route";
+
+function RouteLayout({ path }) {
+  const element = useRoutes(path);
+  return element;
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <HelmetProvider>
+        <Suspense
+          // fallback={
+          //   <div className="d-flex align-items-center justify-content-center h-100 mainLoader">
+          //     <Spinner variant="light" animation="border" role="status" />
+          //   </div>
+          // }
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <RouteLayout path={routes()} />
+        </Suspense>
+      </HelmetProvider>
+    </>
   );
 }
 
